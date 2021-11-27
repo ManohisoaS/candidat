@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var moment = require("moment");
+var jwtUtils = require("../utils/jwt.utils");
+
 // constantes
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
