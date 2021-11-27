@@ -47,7 +47,7 @@ router.get("/user", checkToken, function (req, res, next) {
 });
 
 router.put("/user", checkToken, function (req, res, next) {
-    // get all user information 
+    
     var user = req.body
     if(Object.keys(user).length == 0){
         return res.status(401).json({error:true, message: "Aucun données n'a été envoyée"});
@@ -65,6 +65,13 @@ router.get("/users", checkToken, function (req, res, next) {
     var users = []
 
     return res.status(200).json({error: false, users});
+
+});
+
+router.delete("/user", checkToken, function (req, res, next) {
+    // suppression de l'utilisateur 
+    // ...........
+    return res.status(200).json({error: false, message:"L'utilisateur a été déconnecté succès"});
 
 });
 
