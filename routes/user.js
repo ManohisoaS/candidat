@@ -36,11 +36,36 @@ function checkToken(req, res, next) {
   next();
 }
 
-router.get("/", checkToken, function (req, res, next) {
+router.get("/user", checkToken, function (req, res, next) {
     // get all user information 
+    // use req.id
+    // ......................
+
     var user = null;
 
-    return res.status(201).json({error: false, user})
+    return res.status(200).json({error: false, user})
+});
+
+router.put("/user", checkToken, function (req, res, next) {
+    // get all user information 
+    var user = req.body
+    if(Object.keys(user).length == 0){
+        return res.status(401).json({error:true, message: "Aucun données n'a été envoyée"});
+    }
+
+    // Modification dans la base de donnée
+    // ...........
+    return res.status(200).json({error: false, message:"L'utilisateur a été modifiée succès"});
+
+});
+
+router.get("/users", checkToken, function (req, res, next) {
+    // get all users informations 
+    // ......................
+    var users = []
+
+    return res.status(200).json({error: false, users});
+
 });
 
 module.exports = router;
