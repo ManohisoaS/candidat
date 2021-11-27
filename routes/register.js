@@ -3,7 +3,7 @@ var router = express.Router();
 var moment = require("moment");
 var jwtUtils = require("../utils/jwt.utils");
 
-// constantes
+// constantes de vérification
 const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}$/;
@@ -46,6 +46,7 @@ router.post("/login", function (req, res, next) {
     });
   }
 
+  // Verification dans la BD
   //   if (isEmailExist()) {
   //     // Email existe
   //     return res.status(401).json({
@@ -54,16 +55,20 @@ router.post("/login", function (req, res, next) {
   //     });
   //   }
 
+  // Ecriture dans la base de donné
+  // .....................
+  var id = null;
+
   // succès
   res
     .status(201)
     .json({
       "error": false,
       "message": "L'utilisateur a bien été créé avec succès",
-      "token":{
-          "token":"<token>",
-          "refresh-token":"<refresh-token>",
-          "createAt":"<CREATE AT>",
+      "tokens":{
+          "token":jwtUtils.generateToken({id}),
+          "refresh-token":jwtUtils.refreshToken({id}),
+          "createAt":Date.now(),
       }
     });
 });
