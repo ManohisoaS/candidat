@@ -1,12 +1,30 @@
 var express = require("express");
 var router = express.Router();
 var url = require("url");
-const jwtUtils = require("../utils/jwt.utils");
+// const jwtUtils = require("../utils/jwt.utils");
+
+var UESRS = [{
+  "firstname":"rakoto",
+  "lastname" :"rabe",
+  "sexe": "homme",
+  "date_naissance": "10/12/1992",
+  "Email":"rabe@gmail.com",
+  "Password": "Rakoto0" 
+},{
+  "firstname":"rakfdfgoto",
+  "lastname" :"rabsfgse",
+  "sexe": "homme",
+  "date_naissance": "10/12/1992",
+  "Email":"rabeg@gmail.com",
+  "Password": "Rakoto0" 
+}]
 
 function checkToken(req, res, next) {
   var path_splited = url.parse(req.url, true).pathname.split("/");
   var token = path_splited[path_splited.length - 1];
-  var token_parsed = jwtUtils.parse(token);
+  // var token_parsed = jwtUtils.parse(token);
+  // var token_parsed = JSON.parse(token);
+  console.log(token)
   if (token_parsed.error) {
     switch (token_parsed.id) {
       case 0:
@@ -17,11 +35,12 @@ function checkToken(req, res, next) {
             error: true,
             message: "Le token envoyez n'est pas conforme",
           });
-      case 1:
-        // Donnée valide
-        return res
-          .status(401)
-          .json({ error: true, message: "Le token envoyez n'existe pas" });
+      // case 1:
+      //  verificatin sur un DB
+      //   // Donnée valide
+      //   return res
+      //     .status(401)
+      //     .json({ error: true, message: "Le token envoyez n'existe pas" });
       default:
         // Token révoque
         return res
@@ -40,9 +59,8 @@ router.get("/user", checkToken, function (req, res, next) {
     // get all user information 
     // use req.id
     // ......................
-
+    console.log(req.userId);
     var user = null;
-
     return res.status(200).json({error: false, user})
 });
 

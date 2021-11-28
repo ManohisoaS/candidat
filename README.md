@@ -18,10 +18,10 @@ npm install
 
 Launch the server
 ```bash
-npm run start
+npm start
 ```
 or
 ```bash
-nodemon app.js
+nodemon ./bin/www
 ```
 
