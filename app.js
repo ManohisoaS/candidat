@@ -4,13 +4,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var userRouter = require('./routes/user');
-
 var app = express();
+
+// connect to DB
+//  ......................
+// MONGO_USERNAME
+// MONGO_PASSWORD
+// mongoose.connect(<URI>)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
