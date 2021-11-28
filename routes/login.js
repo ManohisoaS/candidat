@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 const User = require("../models/user");
 const jwtUtils = require("../utils/jwt.utils");
+const bcrypt = require("bcrypt");
+
 const MAX_TENTATIVE = 5;
 var tentatives = {};
 
@@ -39,16 +41,13 @@ router.post("/login", function (req, res, next) {
   }
   
   tentatives[email]["last_time"] = Date.now();
-
-   console.log(tentatives);
   // Recherche dans la BDD
-  User.findOne({ email: email, password: password }, (err, user) => {
-    if (err) {
-      console.log(err);
-    }
-    if (user) {
+  User.findOne({ email: email}, async (err, user) => {
+    
+    if (user && await bcrypt.compare(password, user["password"])) {
       // Succès
       tentatives[email]["count"] = 0;
+      req.app.set(user["_id"], true);
       return res.status(200).json({
         error: false,
         message: "L'utilisateur a été authentifié succès",

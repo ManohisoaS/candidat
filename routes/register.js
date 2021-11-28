@@ -1,4 +1,5 @@
 var express = require("express");
+var bcrypt = require("bcrypt");
 var router = express.Router();
 var moment = require("moment");
 var jwtUtils = require("../utils/jwt.utils");
@@ -11,7 +12,7 @@ const EMAIL_REGEX =
 const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}$/;
 
 /* to register */
-router.post("/register", function (req, res, next) {
+router.post("/register", async function (req, res, next) {
   // Parametre
   var firstname = req.body.firstname;
   var lastname = req.body.lastname;
@@ -46,13 +47,16 @@ router.post("/register", function (req, res, next) {
     });
   }
 
+  // generate salt to hash password
+  // const salt = bcrypt.genSalt(10);
+  // now we set user password to hashed password
+  password = await bcrypt.hash(password, 10);
+
   // Verification dans la BD
   User.find({ email: email }, (err, _user) => {
     if(err){console.log(err)}
     if (_user.length == 0) {
       // Ecriture dans la base de donné
-      // .....................
-      // password need to crypt
       const newUser = new User({
         _id: new mongoose.Types.ObjectId(),
         firstname: firstname,
@@ -66,6 +70,7 @@ router.post("/register", function (req, res, next) {
       newUser
         .save()
         .then((user) => {
+          req.app.set(user["_id"], true);
           res.status(201).json({
             error: false,
             message: "L'utilisateur a bien été créé avec succès",

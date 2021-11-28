@@ -1,8 +1,11 @@
-# candidat
-API candidat
+# API
 
 ### Requirement
 node version 12.22.5
+
+## Modification password
+requêtes PATCH
+donnée {password: <pasword>} 
 
 ### How to install local
 
