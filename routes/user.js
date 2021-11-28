@@ -28,11 +28,11 @@ function checkToken(req, res, next) {
     }
   }
   req.userId = token_parsed.id;
-  if(!req.app.get(req.userId)){
-    return res
-      .status(401)
-      .json({ error: true, message: "Le token envoyez n'existe pas" });
-  }
+  // if(!req.app.get(req.userId)){
+  //   return res
+  //     .status(401)
+  //     .json({ error: true, message: "Le token envoyez n'existe pas" });
+  // }
   next();
 }
 
