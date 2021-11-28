@@ -28,7 +28,7 @@ function checkToken(req, res, next) {
     }
   }
   req.userId = token_parsed.id;
-  if(!req.app[req.userId]){
+  if(!req.app.get(req.userId)){
     return res
       .status(401)
       .json({ error: true, message: "Le token envoyez n'existe pas" });
@@ -83,7 +83,7 @@ router.get("/users/*", checkToken, function (req, res, next) {
 router.delete("/user/*", checkToken, function (req, res, next) {
   // deconnexion de l'utilisateur
   if (req.app.get(req.userId)) {
-    delete req.app[req.userId];
+    req.app.set(req.userId, false);
     return res.status(200).json({
       error: false,
       message: "L'utilisateur a été déconnecté succès",
