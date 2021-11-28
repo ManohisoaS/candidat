@@ -19,11 +19,11 @@ router.post("/login", function (req, res, next) {
 
   //  Incrémentation du tentative
   if (tentatives[email] == undefined) {
-    tentatives[email] = { count: 0 };
+    tentatives[email] = { count:0 };
   }
+  tentatives[email]["count"] += 1;
 
   if (tentatives[email]["count"] > MAX_TENTATIVE) {
-    console.log("max tentative !!!");
     var time = new Date();
     if (time - tentatives[email]["last_time"] >= 60 * 60 * 1000) {
       tentatives[email]["count"] = 0;
@@ -37,7 +37,7 @@ router.post("/login", function (req, res, next) {
         });
     }
   }
-  tentatives[email]["count"] += 1;
+  
   tentatives[email]["last_time"] = Date.now();
 
    console.log(tentatives);
