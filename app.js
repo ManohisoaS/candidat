@@ -16,7 +16,7 @@ var app = express();
 //  ......................
 // MONGO_USERNAME
 // MONGO_PASSWORD
-// mongoose.connect(<URI>)
+mongoose.connect("<URI>", {useMongoClient: true})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
